@@ -19,8 +19,8 @@
         </div>
         
         <div class="footer-links">
-          <a href="/privacy">Privacy Policy</a>
-          <a href="/terms">Terms</a>
+          <!-- <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms</a> -->
           <a href="mailto:mahmoud.ali@oulu.fi">Contact</a>
         </div>
       </div>

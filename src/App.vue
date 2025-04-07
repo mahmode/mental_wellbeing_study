@@ -7,7 +7,9 @@ import ReviewSciencePage from './components/ReviewSciencePage.vue'
 import ReviewSocietyPage from './components/ReviewSocietyPage.vue'
 import ThankYouPage from './components/ThankYouPage.vue'
 import Footer from './components/Footer.vue'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const currentPage = ref(1)
 const totalPages = 6
 const consent = ref('')
@@ -29,8 +31,14 @@ const demographics = ref({
 const progress = computed(() => (currentPage.value / totalPages) * 100)
 
 const nextPage = () => {
-  if (currentPage.value < totalPages)
+  if (currentPage.value < totalPages) {
     currentPage.value++
+
+    if (currentPage.value === 4) // ReviewSciencePage
+      scienceResponse.value = baseResponse.value;
+    else if (currentPage.value === 5) // ReviewSocietyPage
+      societyResponse.value = scienceResponse.value;
+  }
 }
 
 const prevPage = () => {
@@ -45,25 +53,9 @@ const submitForm = () => {
     demographics: demographics.value,
     baseResponse: baseResponse.value,
     scienceResponse: scienceResponse.value,
-    societyResponse: societyResponse.value
+    societyResponse: societyResponse.value,
+    prolific_id: route.query.prolific_id
   })
-  
-  // Reset form after submission
-  currentPage.value = 1
-  consent.value = ''
-  baseResponse.value = ''
-  scienceResponse.value = ''
-  societyResponse.value = ''
-  demographics.value = {
-    age: '',
-    gender: '',
-    education: '',
-    field: '',
-    employment: '',
-    living: '',
-    diagnosed: '',
-    feeling: 4
-  }
 }
 </script>
 
@@ -106,16 +98,14 @@ const submitForm = () => {
         
         <ReviewSciencePage 
           v-if="currentPage === 4" 
-          :response="baseResponse"
-          @update:response="(val) => scienceResponse = val"
+          v-model:response="scienceResponse"
           @next="nextPage" 
           @back="prevPage"
         />
 
         <ReviewSocietyPage 
           v-if="currentPage === 5" 
-          :response="scienceResponse"
-          @update:response="(val) => societyResponse = val"
+          v-model:response="societyResponse"
           @next="nextPage" 
           @back="prevPage"
         />
