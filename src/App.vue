@@ -9,6 +9,9 @@ import ThankYouPage from './components/ThankYouPage.vue'
 import Footer from './components/Footer.vue'
 import { useRoute } from 'vue-router'
 
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+
 const route = useRoute()
 const currentPage = ref(1)
 const totalPages = 6
@@ -27,6 +30,34 @@ const demographics = ref({
   diagnosed: '',
   feeling: 4
 })
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDxoeEvjQ2jbFR8Cqtkq6kqYnvWNH7wKaM",
+  authDomain: "mental-wellbeing-study.firebaseapp.com",
+  projectId: "mental-wellbeing-study",
+  storageBucket: "mental-wellbeing-study.firebasestorage.app",
+  messagingSenderId: "225083005048",
+  appId: "1:225083005048:web:92e24bb7143c637606358d"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+
+const db = getFirestore();
+
+async function addData() {
+  try {
+    const docRef = await addDoc(collection(db, "data"), {
+      prolific_id: route.query.prolific_id,
+      demographics: demographics.value,
+      baseResponse: baseResponse.value,
+      scienceResponse: scienceResponse.value,
+      societyResponse: societyResponse.value
+    });
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
 
 const progress = computed(() => (currentPage.value / totalPages) * 100)
 
@@ -47,15 +78,7 @@ const prevPage = () => {
 }
 
 const submitForm = () => {
-  // In a real app, send data to server here
-  console.log('Form submitted:', {
-    consent: consent.value,
-    demographics: demographics.value,
-    baseResponse: baseResponse.value,
-    scienceResponse: scienceResponse.value,
-    societyResponse: societyResponse.value,
-    prolific_id: route.query.prolific_id
-  })
+  addData();
 }
 </script>
 
