@@ -1,5 +1,6 @@
 <script setup>
-defineEmits(['submit'])
+const emit = defineEmits(['submit'])
+emit('submit')
 </script>
 
 <template>
@@ -8,7 +9,7 @@ defineEmits(['submit'])
       <i class="bi bi-check-circle-fill mb-4" style="font-size: 64px; color: #667eea;"></i>
       <h2 class="mb-3">Thank You!</h2>
       <p class="mb-4">Your participation in this study is greatly appreciated. Your responses will help advance our understanding of mental wellbeing.</p>
-      <button class="btn btn-primary" @click="$emit('submit')">Submit Your Responses</button>
+      <p>You may close this window or tab now.</p>
     </div>
   </div>
 </template>

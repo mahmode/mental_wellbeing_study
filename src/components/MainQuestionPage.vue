@@ -1,9 +1,26 @@
 <script setup>
-defineProps({
-  response: String
-})
+import { ref, watch } from 'vue';
 
-defineEmits(['update:response', 'next', 'back'])
+const props = defineProps({ response: String });
+const emit = defineEmits(['update:response', 'next', 'back']);
+
+const editedResponse = ref(props.response);
+const validationError = ref('');
+
+watch(editedResponse, val => {
+  emit('update:response', val);
+  if (val.trim()) {
+    validationError.value = '';
+  }
+});
+
+const handleNext = () => {
+  if (!editedResponse.value || !editedResponse.value.trim()) {
+    validationError.value = 'This field is required';
+  } else {
+    emit('next');
+  }
+};
 </script>
 
 <template>
@@ -14,16 +31,18 @@ defineEmits(['update:response', 'next', 'back'])
     <div class="mb-4">
       <textarea 
         class="form-control" 
-        rows="5"
-        :value="response"
-        @input="$emit('update:response', $event.target.value)"
+        rows="6"
+        v-model="editedResponse"
         placeholder="Type your response here..."
       ></textarea>
+      <div class="text-danger mt-1" v-if="validationError">
+        <i class="bi bi-exclamation-circle me-2"></i>{{ validationError }}
+      </div>
     </div>
     
     <div class="footer-buttons">
       <button class="btn btn-outline-secondary" @click="$emit('back')">Back</button>
-      <button class="btn btn-primary" @click="$emit('next')">Next</button>
+      <button class="btn btn-primary" @click="handleNext">Next</button>
     </div>
   </div>
 </template>

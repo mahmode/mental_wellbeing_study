@@ -20,8 +20,8 @@ const handleNext = () => {
 
 <template>
   <div class="page">
-    <h2 class="mb-4">Welcome to our study</h2>
-    <p>Thank you for choosing to participate in this study on <strong>student mental wellbeing</strong>. This research aims to explore how people describe their mental well-being in different contexts.</p>
+    <h2 class="mb-4 mt-5">Welcome to our study</h2>
+    <p>Thank you for choosing to participate in this study on <strong>student mental wellbeing</strong>. This research aims to explore how people describe their mental well-being in different contexts. Your responses will help advance our understanding of mental wellbeing.</p>
     <p>The study is conducted by researchers at the University of Oulu, Finland (Doctoral researcher Mahmoud Ali, supervised by Prof. <a href="https://scholar.google.com/citations?user=Qzl_9xYAAAAJ" target="_blank">Simo Hosio</a> at the Faculty of Information Technology and Electrical Engineering).</p>
     <p>For inquiries, you may contact us at <a href="mailto:mahmoud.ali@oulu.fi">mahmoud.ali@oulu.fi</a></p>
     
