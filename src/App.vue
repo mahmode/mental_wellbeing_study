@@ -32,12 +32,12 @@ const demographics = ref({
 })
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDxoeEvjQ2jbFR8Cqtkq6kqYnvWNH7wKaM",
-  authDomain: "mental-wellbeing-study.firebaseapp.com",
-  projectId: "mental-wellbeing-study",
-  storageBucket: "mental-wellbeing-study.firebasestorage.app",
-  messagingSenderId: "225083005048",
-  appId: "1:225083005048:web:92e24bb7143c637606358d"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
