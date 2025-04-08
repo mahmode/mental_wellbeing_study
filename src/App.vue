@@ -10,7 +10,7 @@ import Footer from './components/Footer.vue'
 import { useRoute } from 'vue-router'
 
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 const route = useRoute()
 const currentPage = ref(1)
@@ -51,7 +51,8 @@ async function addData() {
       demographics: demographics.value,
       baseResponse: baseResponse.value,
       scienceResponse: scienceResponse.value,
-      societyResponse: societyResponse.value
+      societyResponse: societyResponse.value,
+      createdAt: serverTimestamp()
     });
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
