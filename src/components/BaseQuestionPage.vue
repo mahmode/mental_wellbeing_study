@@ -21,11 +21,13 @@ const handleNext = () => {
     emit('next');
   }
 };
+
 </script>
 
 <template>
   <div class="page">
     <h2 class="mb-4">Your Mental Wellbeing Experience</h2>
+    <p>We are interested in your thoughts and experiences regarding mental wellbeing.</p>
     <p>Please share any thoughts or experiences you've had regarding your mental wellbeing. This could include challenges you've faced, coping strategies you've found helpful, or any other relevant experiences.</p>
     
     <div class="mb-4">

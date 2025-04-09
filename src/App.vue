@@ -2,9 +2,12 @@
 import { ref, computed } from 'vue'
 import ConsentPage from './components/ConsentPage.vue'
 import DemographicsPage from './components/DemographicsPage.vue'
-import MainQuestionPage from './components/MainQuestionPage.vue'
+import BaseQuestionPage from './components/BaseQuestionPage.vue'
+import BaseQuestionAudioPage from './components/BaseQuestionAudioPage.vue'
 import ReviewSciencePage from './components/ReviewSciencePage.vue'
+import ReviewScienceAudioPage from './components/ReviewScienceAudioPage.vue'
 import ReviewSocietyPage from './components/ReviewSocietyPage.vue'
+import ReviewSocietyAudioPage from './components/ReviewSocietyAudioPage.vue'
 import ThankYouPage from './components/ThankYouPage.vue'
 import Footer from './components/Footer.vue'
 import { useRoute } from 'vue-router'
@@ -13,7 +16,8 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 const route = useRoute()
-const currentPage = ref(1)
+
+const currentPage = ref(2)  // Start at the BaseQuestionPage (3rd page)
 const totalPages = 6
 const consent = ref('')
 const baseResponse = ref('')
@@ -39,6 +43,8 @@ const firebaseConfig = {
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
+
+const variant = computed(() => route.path.split('/')[1])
 
 const firebaseApp = initializeApp(firebaseConfig);
 
@@ -113,23 +119,44 @@ const submitForm = () => {
           @back="prevPage"
         />
         
-        <MainQuestionPage 
-          v-if="currentPage === 3" 
+        <BaseQuestionPage
+          v-if="currentPage === 3 && variant !== 'audio' && variant !== 'video'" 
+          v-model:response="baseResponse" 
+          @next="nextPage" 
+          @back="prevPage"
+        />
+
+        <BaseQuestionAudioPage
+          v-if="currentPage === 3 && variant === 'audio'" 
           v-model:response="baseResponse" 
           @next="nextPage" 
           @back="prevPage"
         />
         
         <ReviewSciencePage 
-          v-if="currentPage === 4" 
+          v-if="currentPage === 4 && variant !== 'audio' && variant !== 'video'" 
+          v-model:response="scienceResponse"
+          @next="nextPage" 
+          @back="prevPage"
+        />
+
+        <ReviewScienceAudioPage 
+          v-if="currentPage === 4 && variant === 'audio'" 
           v-model:response="scienceResponse"
           @next="nextPage" 
           @back="prevPage"
         />
 
         <ReviewSocietyPage 
-          v-if="currentPage === 5" 
+          v-if="currentPage === 5 && variant !== 'audio' && variant !== 'video'" 
           v-model:response="societyResponse"
+          @next="nextPage" 
+          @back="prevPage"
+        />
+
+        <ReviewSocietyAudioPage 
+          v-if="currentPage === 5 && variant === 'audio'" 
+          v-model:response="scienceResponse"
           @next="nextPage" 
           @back="prevPage"
         />
