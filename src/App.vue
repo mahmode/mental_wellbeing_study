@@ -17,7 +17,7 @@ import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/fire
 
 const route = useRoute()
 
-const currentPage = ref(2)  // Start at the BaseQuestionPage (3rd page)
+const currentPage = ref(1)
 const totalPages = 6
 const consent = ref('')
 const baseResponse = ref('')
