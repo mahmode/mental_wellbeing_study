@@ -81,7 +81,7 @@ function stopAudio() {
       <div v-if="isPlaying" class="audio-bars">
         <span></span><span></span><span></span><span></span>
       </div>
-      <i v-else class="bi" :class="hasPlayed ? 'bi-arrow-repeat' : 'bi-play-fill'"></i>
+      <i v-else class="fas" :class="hasPlayed ? 'fa-reply' : 'fa-play'"></i>
       <span>{{ hasPlayed ? 'Replay' : 'Play' }}</span>
     </button>
 

@@ -20,24 +20,24 @@ const validateForm = () => {
 
   if (!props.demographics.age) errors.age = 'Age is required';
   if (!props.demographics.gender) errors.gender = 'Gender is required';
-  if (props.demographics.gender === 'other' && !props.demographics.customGender)
+  if (props.demographics.gender == 'other' && !props.demographics.customGender)
     errors.customGender = 'Please specify your gender';
 
   if (!props.demographics.education) errors.education = 'Education is required';
-  if (props.demographics.education === 'other' && !props.demographics.customEducation)
+  if (props.demographics.education == 'other' && !props.demographics.customEducation)
     errors.customEducation = 'Please specify your education';
 
   if (!props.demographics.field) errors.field = 'Field of study is required';
   if (!props.demographics.employment) errors.employment = 'Employment status is required';
-  if (props.demographics.employment === 'other' && !props.demographics.customEmployment)
+  if (props.demographics.employment == 'other' && !props.demographics.customEmployment)
     errors.customEmployment = 'Please specify your employment';
 
   if (!props.demographics.living) errors.living = 'Living situation is required';
   if (!props.demographics.diagnosed) errors.diagnosed = 'Diagnosis question is required';
-  if (props.demographics.feeling === 0) errors.feeling = 'Feeling rating is required';
-
+  if (props.demographics.feeling == 0) errors.feeling = 'Feeling rating is required';
+  
   validationErrors.value = errors;
-  return Object.keys(errors).length === 0;
+  return Object.keys(errors).length == 0;
 };
 
 const handleNext = () => {
@@ -85,7 +85,7 @@ const handleNext = () => {
           <i class="bi bi-exclamation-circle me-2"></i>{{ validationErrors.gender }}
         </div>
 
-        <div v-if="demographics.gender === 'other'" class="mt-2">
+        <div v-if="demographics.gender == 'other'" class="mt-2">
           <label class="form-label">Please specify</label>
           <input type="text" class="form-control"
             :value="demographics.customGender || ''"
@@ -114,7 +114,7 @@ const handleNext = () => {
           <i class="bi bi-exclamation-circle me-2"></i>{{ validationErrors.education }}
         </div>
 
-        <div v-if="demographics.education === 'other'" class="mt-2">
+        <div v-if="demographics.education == 'other'" class="mt-2">
           <label class="form-label">Please specify</label>
           <input type="text" class="form-control"
             :value="demographics.customEducation || ''"
@@ -152,7 +152,7 @@ const handleNext = () => {
           <i class="bi bi-exclamation-circle me-2"></i>{{ validationErrors.employment }}
         </div>
 
-        <div v-if="demographics.employment === 'other'" class="mt-2">
+        <div v-if="demographics.employment == 'other'" class="mt-2">
           <label class="form-label">Please specify</label>
           <input type="text" class="form-control"
             :value="demographics.customEmployment || ''"
