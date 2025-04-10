@@ -32,7 +32,7 @@ const demographics = ref({
   employment: '',
   living: '',
   diagnosed: '',
-  feeling: 4
+  feeling: 0
 })
 
 const firebaseConfig = {

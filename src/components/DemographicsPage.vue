@@ -34,7 +34,7 @@ const validateForm = () => {
 
   if (!props.demographics.living) errors.living = 'Living situation is required';
   if (!props.demographics.diagnosed) errors.diagnosed = 'Diagnosis question is required';
-  if (!props.demographics.feeling) errors.feeling = 'Feeling rating is required';
+  if (props.demographics.feeling === 0) errors.feeling = 'Feeling rating is required';
 
   validationErrors.value = errors;
   return Object.keys(errors).length === 0;
@@ -201,10 +201,11 @@ const handleNext = () => {
 
       <div class="mb-4">
         <label class="form-label">Overall, how good have you been feeling during the past two weeks? (1 = Very bad, 7 = Very good)</label>
-        <input type="range" class="form-range" min="1" max="7" step="1" :value="demographics.feeling"
+        <input type="range" class="form-range" min="0" max="7" step="1" :value="demographics.feeling"
           @input="$emit('update:demographics', { ...demographics, feeling: $event.target.value }); clearError('feeling')" />
 
         <div class="mood-labels">
+          <span>-</span>
           <span>1</span>
           <span>2</span>
           <span>3</span>
