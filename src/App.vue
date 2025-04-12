@@ -2,12 +2,9 @@
 import { ref, computed } from 'vue'
 import ConsentPage from './components/ConsentPage.vue'
 import DemographicsPage from './components/DemographicsPage.vue'
-import BaseQuestionPage from './components/BaseQuestionPage.vue'
-import BaseQuestionAudioPage from './components/BaseQuestionAudioPage.vue'
-import ReviewSciencePage from './components/ReviewSciencePage.vue'
-import ReviewScienceAudioPage from './components/ReviewScienceAudioPage.vue'
-import ReviewSocietyPage from './components/ReviewSocietyPage.vue'
-import ReviewSocietyAudioPage from './components/ReviewSocietyAudioPage.vue'
+import QuestionPage from './components/QuestionPage.vue'
+import QuestionAudioPage from './components/QuestionAudioPage.vue'
+import QuestionVideoPage from './components/QuestionVideoPage.vue'
 import ThankYouPage from './components/ThankYouPage.vue'
 import Footer from './components/Footer.vue'
 import { useRoute } from 'vue-router'
@@ -35,6 +32,14 @@ const demographics = ref({
   feeling: 0
 })
 
+const questionTitle = "Your Mental Wellbeing Experience"
+const questionDesc = ["We are interested in your thoughts and experiences regarding mental wellbeing.",
+                      "Please share any thoughts or experiences you've had regarding your mental wellbeing. This could include challenges you've faced, coping strategies you've found helpful, or any other relevant experiences."];
+const reviewScieneTitle = "Advancing Mental Wellbeing Research";
+const reviewScienceDesc = ["Your response is valuable! By sharing your thoughts, you're contributing to scientific research that helps improve our understanding of mental well-being. Would you be willing to provide more details or elaborate on your previous response?"];
+const reviewSocietyTitle = "Contributing to a better society";
+const reviewSocietyDesc = ["This research aims to improve lives and create positive change in society. Your insights are invaluable. Do you have any additional thoughts to share?"];
+
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -49,6 +54,8 @@ const variant = computed(() => route.path.split('/')[1])
 const firebaseApp = initializeApp(firebaseConfig);
 
 const db = getFirestore();
+
+const prolificIdMissing = ref(false);
 
 async function addData() {
   try {
@@ -66,15 +73,22 @@ async function addData() {
   }
 }
 
+const submitForm = () => {
+    prolificIdMissing.value = !route.query.prolific_id;
+    
+    if (!prolificIdMissing.value)
+      addData();
+}
+
 const progress = computed(() => (currentPage.value / totalPages) * 100)
 
 const nextPage = () => {
   if (currentPage.value < totalPages) {
     currentPage.value++
 
-    if (currentPage.value === 4) // ReviewSciencePage
+    if (currentPage.value === 4) // Review Science Page
       scienceResponse.value = baseResponse.value;
-    else if (currentPage.value === 5) // ReviewSocietyPage
+    else if (currentPage.value === 5) // Review Society Page
       societyResponse.value = scienceResponse.value;
   }
 }
@@ -84,9 +98,6 @@ const prevPage = () => {
     currentPage.value--
 }
 
-const submitForm = () => {
-  addData();
-}
 </script>
 
 <template>
@@ -101,11 +112,12 @@ const submitForm = () => {
 
     <main class="app-content">
       <div class="questionnaire-container">
-        <div class="progress rounded-0" style="height: 6px;">
+        
+        <div class="progress rounded-0" style="height: 6px; margin-top: 10px;">
           <div class="progress-bar" role="progressbar" :style="{width: progress + '%'}" 
               aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
-        
+
         <ConsentPage 
           v-if="currentPage === 1" 
           v-model:consent="consent" 
@@ -119,52 +131,100 @@ const submitForm = () => {
           @back="prevPage"
         />
         
-        <BaseQuestionPage
+        <QuestionPage
           v-if="currentPage === 3 && variant !== 'audio' && variant !== 'video'" 
-          v-model:response="baseResponse" 
+          v-model:response="baseResponse"
+          :title="questionTitle"
+          :description="questionDesc"
+          
           @next="nextPage" 
           @back="prevPage"
         />
 
-        <BaseQuestionAudioPage
-          v-if="currentPage === 3 && variant === 'audio'" 
-          v-model:response="baseResponse" 
-          @next="nextPage" 
-          @back="prevPage"
-        />
-        
-        <ReviewSciencePage 
+        <QuestionPage 
           v-if="currentPage === 4 && variant !== 'audio' && variant !== 'video'" 
           v-model:response="scienceResponse"
-          @next="nextPage" 
-          @back="prevPage"
-        />
-
-        <ReviewScienceAudioPage 
-          v-if="currentPage === 4 && variant === 'audio'" 
-          v-model:response="scienceResponse"
-          @next="nextPage" 
-          @back="prevPage"
-        />
-
-        <ReviewSocietyPage 
-          v-if="currentPage === 5 && variant !== 'audio' && variant !== 'video'" 
-          v-model:response="societyResponse"
-          @next="nextPage" 
-          @back="prevPage"
-        />
-
-        <ReviewSocietyAudioPage 
-          v-if="currentPage === 5 && variant === 'audio'" 
-          v-model:response="scienceResponse"
+          :title="reviewScieneTitle"
+          :description="reviewScienceDesc"
+          
           @next="nextPage" 
           @back="prevPage"
         />
         
-        <ThankYouPage 
-          v-if="currentPage === 6" 
+        <QuestionPage 
+          v-if="currentPage === 5 && variant !== 'audio' && variant !== 'video'" 
+          v-model:response="societyResponse"
+          :title="reviewSocietyTitle"
+          :description="reviewSocietyDesc"
+
+          @next="nextPage" 
+          @back="prevPage"
+        />
+
+        <QuestionAudioPage
+          v-if="currentPage === 3 && variant === 'audio'" 
+          v-model:response="baseResponse" 
+          :title="questionTitle"
+
+          @next="nextPage" 
+          @back="prevPage"
+        />
+        
+        <QuestionAudioPage 
+          v-if="currentPage === 4 && variant === 'audio'" 
+          v-model:response="scienceResponse"
+          :title="reviewScieneTitle"
+
+          @next="nextPage" 
+          @back="prevPage"
+        />
+
+        <QuestionAudioPage 
+          v-if="currentPage === 5 && variant === 'audio'" 
+          v-model:response="societyResponse"
+          :title="reviewSocietyTitle"
+
+          @next="nextPage" 
+          @back="prevPage"
+        />
+
+        <QuestionVideoPage
+          v-if="currentPage === 3 && variant === 'video'" 
+          v-model:response="baseResponse" 
+          :title="questionTitle"
+
+          @next="nextPage" 
+          @back="prevPage"
+        />
+        
+        <QuestionVideoPage 
+          v-if="currentPage === 4 && variant === 'video'" 
+          v-model:response="scienceResponse"
+          :title="reviewScieneTitle"
+
+          @next="nextPage" 
+          @back="prevPage"
+        />
+
+        <QuestionVideoPage 
+          v-if="currentPage === 5 && variant === 'video'" 
+          v-model:response="societyResponse"
+          :title="reviewSocietyTitle"
+
+          @next="nextPage" 
+          @back="prevPage"
+        />
+        
+        <ThankYouPage
+          v-if="currentPage === 6 & !prolificIdMissing"
           @submit="submitForm"
         />
+
+        <div v-if="prolificIdMissing" class="alert alert-danger" style="margin-top: 50%;" role="alert">
+          <i class="fas fa-triangle-exclamation me-2"></i>
+          Error: Missing Prolific ID. Please make sure the Prolific ID is included in the URL.
+        </div>
+
       </div>
     </main>
 

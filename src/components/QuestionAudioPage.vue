@@ -2,7 +2,7 @@
 import { ref, watch } from 'vue';
 import audioSrc from '@/assets/base_question.mp3'
 
-const props = defineProps({ response: String });
+const props = defineProps({response: String, title: String});
 const emit = defineEmits(['update:response', 'next', 'back']);
 
 const editedResponse = ref(props.response);
@@ -71,7 +71,7 @@ function stopAudio() {
 
 <template>
   <div class="page">
-    <h2 class="mb-4">Contributing to a Better Society</h2>
+    <h2 class="mb-4">{{ title }}</h2>
     <p class="mt-3">Click Play to listen to the question, then type your response in the text box below.</p>
 
     <!-- Play / Replay Button -->
@@ -93,7 +93,7 @@ function stopAudio() {
         placeholder="Type your response here..."
       ></textarea>
       <div class="text-danger mt-1" v-if="validationError">
-        <i class="bi bi-exclamation-circle me-2"></i>{{ validationError }}
+        <i class="fas fa-circle-exclamation me-1 mt-2"></i>{{ validationError }}
       </div>
     </div>
     

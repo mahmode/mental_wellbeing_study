@@ -50,7 +50,7 @@ const handleNext = () => {
       <!-- Error message -->
       <transition name="fade">
         <div v-if="showError" class="alert alert-danger mt-3">
-          <i class="bi bi-exclamation-circle me-2"></i>
+          <i class="fas fa-triangle-exclamation me-2"></i>
           You must provide consent to continue
         </div>
       </transition>

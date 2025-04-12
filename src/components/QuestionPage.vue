@@ -1,7 +1,11 @@
 <script setup>
 import { ref, watch } from 'vue';
 
-const props = defineProps({ response: String });
+const props = defineProps({
+  response: String,
+  title: String,
+  description: { type: Array, default: () => [] }
+});
 const emit = defineEmits(['update:response', 'next', 'back']);
 
 const editedResponse = ref(props.response);
@@ -26,9 +30,10 @@ const handleNext = () => {
 
 <template>
   <div class="page">
-    <h2 class="mb-4">Your Mental Wellbeing Experience</h2>
-    <p>We are interested in your thoughts and experiences regarding mental wellbeing.</p>
-    <p>Please share any thoughts or experiences you've had regarding your mental wellbeing. This could include challenges you've faced, coping strategies you've found helpful, or any other relevant experiences.</p>
+    <h2 class="mb-4">{{ title }}</h2>
+    <p v-for="(paragraph, index) in description" :key="index">
+      {{ paragraph }}
+    </p>
     
     <div class="mb-4">
       <textarea 
@@ -38,7 +43,7 @@ const handleNext = () => {
         placeholder="Type your response here..."
       ></textarea>
       <div class="text-danger mt-1" v-if="validationError">
-        <i class="bi bi-exclamation-circle me-2"></i>{{ validationError }}
+        <i class="fas fa-circle-exclamation me-1 mt-2"></i>{{ validationError }}
       </div>
     </div>
     

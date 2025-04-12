@@ -65,7 +65,7 @@ const handleNext = () => {
           @input="$emit('update:demographics', { ...demographics, age: $event.target.value }); clearError('age')"
         >
         <div class="text-danger" v-if="validationErrors.age">
-          <i class="bi bi-exclamation-circle me-2"></i>{{ validationErrors.age }}
+          <i class="fas fa-circle-exclamation me-1 mt-2"></i>{{ validationErrors.age }}
         </div>
       </div>
 
@@ -82,7 +82,7 @@ const handleNext = () => {
           <option value="prefer-not-to-say">Prefer not to say</option>
         </select>
         <div class="text-danger" v-if="validationErrors.gender">
-          <i class="bi bi-exclamation-circle me-2"></i>{{ validationErrors.gender }}
+          <i class="fas fa-circle-exclamation me-1 mt-2"></i>{{ validationErrors.gender }}
         </div>
 
         <div v-if="demographics.gender == 'other'" class="mt-2">
@@ -91,7 +91,7 @@ const handleNext = () => {
             :value="demographics.customGender || ''"
             @input="$emit('update:demographics', { ...demographics, customGender: $event.target.value }); clearError('customGender')" />
           <div class="text-danger" v-if="validationErrors.customGender">
-            <i class="bi bi-exclamation-circle me-2"></i>{{ validationErrors.customGender }}
+            <i class="fas fa-circle-exclamation me-1 mt-2"></i>{{ validationErrors.customGender }}
           </div>
         </div>
       </div>
@@ -111,7 +111,7 @@ const handleNext = () => {
           <option value="other">Other</option>
         </select>
         <div class="text-danger" v-if="validationErrors.education">
-          <i class="bi bi-exclamation-circle me-2"></i>{{ validationErrors.education }}
+          <i class="fas fa-circle-exclamation me-1 mt-2"></i>{{ validationErrors.education }}
         </div>
 
         <div v-if="demographics.education == 'other'" class="mt-2">
@@ -120,7 +120,7 @@ const handleNext = () => {
             :value="demographics.customEducation || ''"
             @input="$emit('update:demographics', { ...demographics, customEducation: $event.target.value }); clearError('customEducation')" />
           <div class="text-danger" v-if="validationErrors.customEducation">
-            <i class="bi bi-exclamation-circle me-2"></i>{{ validationErrors.customEducation }}
+            <i class="fas fa-circle-exclamation me-1 mt-2"></i>{{ validationErrors.customEducation }}
           </div>
         </div>
       </div>
@@ -134,7 +134,7 @@ const handleNext = () => {
           @input="$emit('update:demographics', { ...demographics, field: $event.target.value }); clearError('field')"
         >
         <div class="text-danger" v-if="validationErrors.field">
-          <i class="bi bi-exclamation-circle me-2"></i>{{ validationErrors.field }}
+          <i class="fas fa-circle-exclamation me-1 mt-2"></i>{{ validationErrors.field }}
         </div>
       </div>
 
@@ -149,7 +149,7 @@ const handleNext = () => {
           <option value="other">Other</option>
         </select>
         <div class="text-danger" v-if="validationErrors.employment">
-          <i class="bi bi-exclamation-circle me-2"></i>{{ validationErrors.employment }}
+          <i class="fas fa-circle-exclamation me-1 mt-2"></i>{{ validationErrors.employment }}
         </div>
 
         <div v-if="demographics.employment == 'other'" class="mt-2">
@@ -158,7 +158,7 @@ const handleNext = () => {
             :value="demographics.customEmployment || ''"
             @input="$emit('update:demographics', { ...demographics, customEmployment: $event.target.value }); clearError('customEmployment')" />
           <div class="text-danger" v-if="validationErrors.customEmployment">
-            <i class="bi bi-exclamation-circle me-2"></i>{{ validationErrors.customEmployment }}
+            <i class="fas fa-circle-exclamation me-1 mt-2"></i>{{ validationErrors.customEmployment }}
           </div>
         </div>
       </div>
@@ -177,7 +177,7 @@ const handleNext = () => {
           <option value="partner">With partner/spouse</option>
         </select>
         <div class="text-danger" v-if="validationErrors.living">
-          <i class="bi bi-exclamation-circle me-2"></i>{{ validationErrors.living }}
+          <i class="fas fa-circle-exclamation me-1 mt-2"></i>{{ validationErrors.living }}
         </div>
       </div>
 
@@ -195,7 +195,7 @@ const handleNext = () => {
           <option value="prefer-not-to-say">Prefer not to say</option>
         </select>
         <div class="text-danger" v-if="validationErrors.diagnosed">
-          <i class="bi bi-exclamation-circle me-2"></i>{{ validationErrors.diagnosed }}
+          <i class="fas fa-circle-exclamation me-1 mt-2"></i>{{ validationErrors.diagnosed }}
         </div>
       </div>
 
@@ -215,7 +215,7 @@ const handleNext = () => {
           <span>7</span>
         </div>
         <div class="text-danger" v-if="validationErrors.feeling">
-          <i class="bi bi-exclamation-circle me-2"></i>{{ validationErrors.feeling }}
+          <i class="fas fa-circle-exclamation me-1 mt-2"></i>{{ validationErrors.feeling }}
         </div>
       </div>
 
